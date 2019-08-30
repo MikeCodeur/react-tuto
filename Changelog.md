@@ -1,12 +1,160 @@
 # Changelog
 
+## RBP v4: "The One With Hooks (And Much More)" Edition (April 2019)
+
+### News
+
+React Boilerplate v4.0.0 is out and it's a doozy! Here are the highlights:
+
+- React has added many new features and it's time for React Boilerplate to embrace them.
+  - We now use `React.lazy` and `Suspense` for component lazy-loading instead of an external library.
+  - We've added `useInjectSaga` and `useInjectReducer` hooks to manage saga and reducer injection. They're integrated into the generators and thus become the new defaults. (Should you need them, the HOCs are still there.)
+  - The generators don't support classes anymore. The `PureComponent` vs `Component` choice was replaced with an option to wrap your component inside `React.memo`.
+- After much deliberation, `Immutable.js` is finally gone. We've added `Immer` instead. With it, we can write very concise and readable reducers while sticking to native JavaScript data structures.
+- Following the release of React Hooks, it's become even clearer that `react-testing-library` is now the industry-standard for React DOM testing. Workarounds for the incompatibilities between `enzyme` and `styled-components` are gone and we can now write leaner and more meaningful tests.
+
+There are many more changes to our documentation, internals and general project setup. You can find a full changelog below.
+
+Huge thanks to @Mensae, @gretzky, @jwinn and everyone who helped review or submit PRs! If I've forgotten your contribution in the credits below, please let me know.
+
+We hope you enjoy this release and welcome any feedback, bug reports or feature suggestions you can send our way!
+
+### Main
+
+- **Remove `Immutable.js` in favor of `Immer`** (**@julienben**, **@robertaird**)
+- **Migrate from `enzyme` to `react-testing-library`** (**@mensae**)
+  - New instructions for snapshot and behavior testing
+- **Embracing Hooks** (**@julienben**)
+  - Add `eslint-plugin-react-hooks`
+  - Migrate all class components to functions
+  - Add `useInjectSaga` and `useInjectReducer` hooks
+  - Remove generator options to extend `Component` or `PureComponent`. Replace with a `React.memo` option.
+- **Use `React.lazy` and `Suspense` instead of `loadable-components` to code-split and asynchronously load components** (**@julienben**)
+
+### Documentation updates
+
+- Update Heroku deployment instructions (**@TheAncientGoat**)
+- Add subfolder deployment instructions (**@nshimiye**)
+- Add AWS EB deployment instructions (**@Al-un**)
+- Spelling and grammar fixes (**@khayyamsaleem**, **@ngtan**)
+
+### Internals updates
+
+- Many dependency updates including: (**@julienben**)
+  - react and react-dom (`16.6` to `16.8.6`)
+  - react-redux (`5` to `7`) (**@bumi001**, **@jwinn**)
+  - connected-react-router (`4` to `6`)
+  - react-router-dom (`4` to `5`)
+  - redux-saga (`0.16` to `1`)
+  - sanitize.css (`4` to `8`)
+- Update default saga injection mode to DAEMON (**@howardya**)
+- Update generators to reflect all the stack changes
+- Migrate default Node version to `lts/dubnium` (**@julienben**)
+- Fix support for `stylelint` (**@jwinn**)
+- Fix setup script for Windows environments (**@mensae**)
+- Generate passing tests for components/containers (**@mjhost**)
+- Rewrite generators code (**@mensae**)
+- Complete rewrite or `generate-templates-for-linting.js` (**@mensae**)
+- `webpack.DefinePlugin` => `webpack.EnvironmentPlugin` (**@nshimiye**)
+- New Webpack code splitting config (**@julienben**)
+- Remove `process.noDeprecation = true` (**@spawnia**)
+- Miscellaneous fixes (**@ngtan**)
+
+### Project maintenance
+
+- Switch from Gitter to Spectrum (**@gretzky**)
+- Update Code of Conduct and Contribution Guidelines (**@julienben**)
+- New Issue Templates (**@gretzky**)
+- New bots to help with issue management (**@gretzky**)
+- Better recognition of contributors via adherence to [All Contributors](https://allcontributors.org/) specification (**@julienben**)
+
+## 3.7 October 2018
+
+### News
+
+Welcome to a new React Boilerplate release with improvements aplenty, bug fixes and major dependency upgrades! Big thanks to @gretzky, @justingreenberg, @jwinn and everyone who helped review and submit PRs for this release!
+
+For existing projects, the only way to upgrade from `3.6.0` is to manually apply the changes from #2403 to your project. Please be careful when doing so as it isn't officially supported and could break things on your end.
+
+Next steps will include re-thinking immutability in the store (RFC @ #2092), re-organizing docs, saga improvements, smart bundling and plenty more. Please keep the PRs coming. And if you're up for it, remember that you can use the dev branch to test all the latest updates and report bugs!
+
+### Main
+
+- **Upgrades to Babel 7, React 16.6, ESLint 5, styled-components 4** (@julienben)
+  - Config file and Babel plugin cleanup (@gretzky)
+  - Fix extract-intl script for Babel 7 (@fanixk)
+- **Webpack improvements**
+  - Removal of dll plugin (@gretzky)
+  - Gzipping and better optimization config in prod (@gretzky)
+  - react-app-polyfill for targeted IE support (@gretzky)
+  - Switch from UglifyJS to Terser plugin (@robertaird)
+  - Icons generated by webpack-pwa-manifest plugin (@Mensae)
+- **Switch from Yarn back to npm** (@julienben)
+  - CI improvements (@jwinn)
+- **New documentation section for forks**
+  - SSR (@gretzky)
+  - Electron (@mjangir)
+  - TypeScript (@Can-Sahin)
+
+### Other Updates
+
+- Migration from deprecated react-router-redux to connected-react-router (@julienben)
+- Migration from react-loadable to loadable-components (@julienben)
+- Quick start - Clone to a named directory (@spawnia)
+- Scoped variables in i18n messages (@hatsuo)
+- Use .prettierrc path relative to .eslintrc.js (@abeMedia)
+- Fixes to generators (@julienben, @hatsuo, @ngtan)
+- babel-plugin-lodash for easier import syntax (@julienben)
+- Bug fix in setup script (@autechr3)
+
+Lots of additional documentation updates thanks to @doaboa, @cheickmec, @nicogreenarry, @sduquej, @diwakar-s-maurya.
+
+## 3.6 June 2018
+
+### News
+
+Major version updates are finally here! It's been awhile, but we're a small team that's been pushing this for awhile. Thanks to several users' PRs, we were able to cherry-pick a lot from the dev branch to push this release out. We decided because of the amount of dependencies that needed to be updated- we would overshoot some of the changes made on the dev branch and just grab the most pressing ones.
+
+Next steps for us will be revisiting the dev branch, revisiting outstanding PRs and RFCs (like Immutable), and also plugging away at a create-react-app spinoff for react-boilerplate.
+
+### Main
+
+- **Upgrade Webpack to v4** (@julienben @stern-shawn)
+  - Syntax / function changes (mode, optimization, etc.)
+  - Remove webpack loader syntax from main app
+  - Better SVG handling
+- **Upgrade Redux to v4** (@gretzky)
+- **Upgrade React to v16** (@blling @gretzky)
+- **Upgrade Enzyme to v3** (@blling @gretzky)
+  - Add in new Adapter, as required
+  - Minor Jest config tweaks to include new Enzyme setup config
+- **Upgrade styled-components to v3** (@julienben)
+  - Reconfigure Jest snapshot testing for styled-components (@gretzky)
+- **Added support for node v9, v8** (@julienben)
+  - Removed support for node v6
+- **Add Prettier** (@julienben)
+- **Upgrade ESLint to v4** (@julienben)
+- **Add stylelint and stylelint config** (@julienben)
+
+### Other Updates
+
+- Add `--fix` flag to eslint command (@shobhitchittora)
+- Correct babel plugin order (@petrhanak)
+- Add missing `import PropTypes` to component generators (@GoldAnna)
+- Remove unnecessary `onRejected()` from FontFaceObserver (@akarve)
+- Include "Setting Up Your Editor" in documentation (@mjbvz)
+- Add login / authentication flow example into documentation (@tinavanschelt)
+- More detailed redux-saga usage documentation (@acharlop)
+- Fix ejection error of done sagas (@outdooricon)
+
 ## 3.5 September 2017
 
-## News
+### News
 
 So, a few things have changed in the JS ecosystem since the original release of React Boilerplate, and there was a discussion in #1776 around the it's future. TLDR; we had two incompatible PRs — one for server-side rendering, and another for react-router v4. The community decided that we would keep our dependencies up to date (upgrade react-router) and establish a clear mission for React Boilerplate:
 
 **React Boilerplate is a rock-solid foundation for crafting large, high-performance enterprise-grade frontend web applications that have advanced/custom requirements.**
+
 - Static output designed for CDN and edge caches
 - Extreme Developer Ergonomics
   - Parallelized Tests
@@ -122,7 +270,6 @@ If you want to help us make react-boilerplate great, please use the `dev` branch
 
 This release was made possible by [Fullstack React](https://www.fullstackreact.com/) and [Serverless](http://serverless.com)! _Want to support us too? [Click here!](http://opencollective.com/react-boilerplate)_
 
-
 ## RBP v3.0: The "JS Fatigue Antivenin" Edition
 
 React Boilerplate (RBP) v3.0.0 is out, and it's a _complete_ rewrite! :tada:
@@ -150,12 +297,14 @@ website!
   tests are now co-located with the code that they validate.
 
 - **New industry-standard JS utilities** We're now making the most of...
-    - ImmutableJS
-    - reselect
-    - react-router-redux
-    - redux-saga
+
+  - ImmutableJS
+  - reselect
+  - react-router-redux
+  - redux-saga
 
 - **Huge CSS Improvements**
+
   - _[CSS Modules](docs/css/css-modules.md)_: Finally, truly modular, reusable
     styles!
   - _Page-specific CSS_: smart Webpack configuration means that only the CSS
@@ -165,6 +314,7 @@ website!
     that you and your team stay on point.
 
 - **Performance**
+
   - _Code splitting_: splitting/chunking by route means the leanest, meanest
     payload (because the fastest code is the code you don't load!)
 
